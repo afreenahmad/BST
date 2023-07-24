@@ -2,7 +2,6 @@ package BST;
 
 
 
-import java.util.Arrays;
 import java.util.List;
 
 //Afreen Ahmad
@@ -37,7 +36,7 @@ public class Album implements Comparable<Album> {
 
     @Override
     public int compareTo(Album other) {
-        return Integer.compare(this.numSongs, other.numSongs);
+        return Integer.compare(this.id, other.id);
     }
 
     @Override
@@ -55,5 +54,6 @@ public class Album implements Comparable<Album> {
         sb.append("Num Songs: ").append(numSongs);
         return sb.toString();
     }
-}
 
+    // Add equals and hashCode methods if necessary
+}
