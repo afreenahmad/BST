@@ -24,26 +24,40 @@ public class BST {
     }
 
     public Node insert(Album data) {
+        Node newNode = new Node(data);
+
         if (root == null) {
-            root = new Node(data);
-            return root;
+            root = newNode;
         } else {
-            return insertRec(root, data);
+            insertRec(root, newNode);
         }
+
+        return newNode;
     }
 
-    private Node insertRec(Node current, Album data) {
-        if (current == null) {
-            return new Node(data);
-        }
+    private void insertRec(Node current, Node newNode) {
+        int compareResult = newNode.data.compareTo(current.data);
 
-        if (data.compareTo(current.data) < 0) {
-            current.left = insertRec(current.left, data);
-        } else if (data.compareTo(current.data) > 0) {
-            current.right = insertRec(current.right, data);
-        }
+        if (compareResult < 0) {
+            if (current.left == null) {
+                current.left = newNode;
+            } else {
+                insertRec(current.left, newNode);
+            }
+        } else if (compareResult > 0) {
+            if (current.right == null) {
+                current.right = newNode;
+            } else {
+                insertRec(current.right, newNode);
+            }
+        } else {
 
-        return current;
+            if (current.left == null) {
+                current.left = newNode;
+            } else {
+                insertRec(current.left, newNode);
+            }
+        }
     }
 
     public List<Album> getInOrderTraversal() {
@@ -80,7 +94,7 @@ public class BST {
         } else if (comparison > 0) {
             current.right = deleteRec(current.right, current, data);
         } else {
-            // Case 1: Node to be deleted is a leaf node
+
             if (current.left == null && current.right == null) {
 
                 if (parent == null) {
@@ -94,7 +108,6 @@ public class BST {
                     }
                 }
             }
-            // Case 2: Node to be deleted has only one child
             else if (current.left == null) {
                 if (parent == null) {
                     root = current.right;
@@ -116,7 +129,7 @@ public class BST {
                     }
                 }
             }
-            // Case 3: Node to be deleted has two children
+
             else {
                 Node successor = findMin(current.right);
                 current.data = successor.data;
@@ -144,11 +157,39 @@ public class BST {
         int comparison = data.compareTo(current.data);
 
         if (comparison == 0) {
-            return true; // Found the data in the current node
+            return true;
         } else if (comparison < 0) {
-            return containsRec(current.left, data); // Search in the left subtree
+            return containsRec(current.left, data);
         } else {
-            return containsRec(current.right, data); // Search in the right subtree
+            return containsRec(current.right, data);
         }
     }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        toStringRec(root, sb);
+        return sb.toString();
+    }
+
+    private void toStringRec(Node current, StringBuilder sb) {
+        if (current == null) {
+            sb.append("N, ");
+            return;
+        }
+
+        sb.append(current.data.getId()).append(", ");
+        toStringRec(current.left, sb);
+        toStringRec(current.right, sb);
+
+        if (current.left == null) {
+            sb.append("N, ");
+        }
+
+        if (current.right == null) {
+            sb.append("N, ");
+        }
+    }
+
+
+
 }
