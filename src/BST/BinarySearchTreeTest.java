@@ -58,5 +58,27 @@ class BinarySearchTreeTest {
         Album nonExistentAlbum = new Album(4, Arrays.asList("Artist5"), "Album 4", 8);
         assertThrows(IllegalArgumentException.class, () -> bst.delete(nonExistentAlbum));
     }
+    @Test
+    public void testContains() {
+        BST bst = new BST();
+
+        Album album1 = new Album(1, Arrays.asList("Artist1"), "Album 1", 10);
+        Album album2 = new Album(2, Arrays.asList("Artist2", "Artist3"), "Album 2", 15);
+        Album album3 = new Album(3, Arrays.asList("Artist4"), "Album 3", 5);
+
+        bst.insert(album1);
+        bst.insert(album2);
+
+        assertTrue(bst.contains(album1));
+        assertTrue(bst.contains(album2));
+        assertFalse(bst.contains(album3));
+
+        // Test with different album objects with the same data as album1 and album2
+        Album duplicateAlbum1 = new Album(1, Arrays.asList("Artist1"), "Album 1", 10);
+        Album duplicateAlbum2 = new Album(2, Arrays.asList("Artist2", "Artist3"), "Album 2", 15);
+
+        assertTrue(bst.contains(duplicateAlbum1));
+        assertTrue(bst.contains(duplicateAlbum2));
+    }
 
 }

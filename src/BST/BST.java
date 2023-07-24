@@ -132,4 +132,23 @@ public class BST {
         }
         return node;
     }
+    public boolean contains(Album data) {
+        return containsRec(root, data);
+    }
+
+    private boolean containsRec(Node current, Album data) {
+        if (current == null) {
+            return false;
+        }
+
+        int comparison = data.compareTo(current.data);
+
+        if (comparison == 0) {
+            return true; // Found the data in the current node
+        } else if (comparison < 0) {
+            return containsRec(current.left, data); // Search in the left subtree
+        } else {
+            return containsRec(current.right, data); // Search in the right subtree
+        }
+    }
 }
